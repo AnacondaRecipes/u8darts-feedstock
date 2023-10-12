@@ -2,7 +2,7 @@
 {% set pypi_package_name = "u8darts" %}
 
 package:
-  name: u8darts
+  name: u8darts-suite
   version: {{ version }}
 
 source:
