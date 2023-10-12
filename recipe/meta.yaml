@@ -1,12 +1,12 @@
+{% set name = "u8darts" %}
 {% set version = "0.26.0" %}
-{% set pypi_package_name = "u8darts" %}
 
 package:
-  name: u8darts-suite
+  name: {{ name|lower }}-suite
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ pypi_package_name[0] }}/{{ pypi_package_name }}/{{ pypi_package_name }}-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 724878deb4cf6ccac7bd20513065fbcace9857839a29e3902ea1aa14cc10484d
 
 build:
