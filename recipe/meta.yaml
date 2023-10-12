@@ -11,25 +11,26 @@ source:
 
 build:
   number: 0
-  noarch: python
+  skip: true  # [py<38]
 
 outputs:
   - name: u8darts
     build:
-      noarch: python
-      script: python -m pip install . --no-deps -vv
+      script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
     requirements:
       host:
-        - python >=3.8
+        - python
         - pip
+        - setuptools
+        - wheel
       run:
-        - python >=3.8
+        - python
         - holidays >=0.11.1
         - joblib >=0.16.0
         - matplotlib-base >=3.3.0
         - nfoursid >=1.0.0
         - numpy >=1.19.0
-        - pandas>=1.0.5
+        - pandas >=1.0.5
         - pmdarima >=1.8.0
         - pyod >=0.9.5
         - requests >=2.22.0
@@ -66,23 +67,28 @@ outputs:
         - darts.utils
         - darts.utils.data
         - darts.utils.historical_forecasts
-      source_files:
-        - darts
-      commands:
-        - pytest darts/tests
       requires:
         - pip
         - testfixtures
         - pytest
+      source_files:
+        - darts
+      commands:
+        - pip check
+        - pytest darts/tests
 
   - name: u8darts-notorch
     build:
-      noarch: python
+      script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+
     requirements:
       host:
-        - python >=3.8
+        - python
+        - pip
+        - setuptools
+        - wheel
       run:
-        - python >=3.8
+        - python
         - {{ pin_subpackage("u8darts", exact=True) }}
         - catboost >=1.0.6
         - lightgbm >=3.2.0
@@ -111,23 +117,27 @@ outputs:
         - darts.utils
         - darts.utils.data
         - darts.utils.historical_forecasts
-      source_files:
-        - darts
-      commands:
-        - pytest darts/tests
       requires:
         - pip
         - testfixtures
         - pytest
+      source_files:
+        - darts
+      commands:
+        - pip check
+        - pytest darts/tests
 
   - name: u8darts-torch
     build:
-      noarch: python
+      script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
     requirements:
       host:
-        - python >=3.8
+        - python
+        - pip
+        - setuptools
+        - wheel
       run:
-        - python >=3.8
+        - python
         - {{ pin_subpackage("u8darts", exact=True) }}
         - pytorch-lightning >=1.5.0
         - tensorboardx >=2.1
@@ -156,23 +166,27 @@ outputs:
         - darts.utils
         - darts.utils.data
         - darts.utils.historical_forecasts
-      source_files:
-        - darts
-      commands:
-        - pytest darts/tests
       requires:
         - pip
         - testfixtures
         - pytest
+      source_files:
+        - darts
+      commands:
+        - pip check
+        - pytest darts/tests
 
   - name: u8darts-all
     build:
-      noarch: python
+      script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
     requirements:
       host:
-        - python >=3.8
+        - python
+        - pip
+        - setuptools
+        - wheel
       run:
-        - python >=3.8
+        - python
         - {{ pin_subpackage("u8darts", exact=True) }}
         - pytorch-lightning >=1.5.0
         - tensorboardx >=2.1
@@ -204,14 +218,15 @@ outputs:
         - darts.utils
         - darts.utils.data
         - darts.utils.historical_forecasts
-      source_files:
-        - darts
-      commands:
-        - pytest darts/tests
       requires:
         - pip
         - testfixtures
         - pytest
+      source_files:
+        - darts
+      commands:
+        - pip check
+        - pytest darts/tests
 
 about:
   home: https://unit8co.github.io/darts/
@@ -219,6 +234,15 @@ about:
   license_family: APACHE
   license_file: LICENSE
   summary: A python library for user-friendly forecasting and anomaly detection on time series.
+  description: |
+    Darts is a Python library for user-friendly forecasting and anomaly detection on time series. 
+    It contains a variety of models, from classics such as ARIMA to deep neural networks. 
+    The forecasting models can all be used in the same way, using fit() and predict() functions, 
+    similar to scikit-learn. The library also makes it easy to backtest models, combine the 
+    predictions of several models, and take external data into account. Darts supports both 
+    univariate and multivariate time series and models. The ML-based models can be trained on 
+    potentially large datasets containing multiple time series, and some of the models offer a 
+    rich support for probabilistic forecasting.
   dev_url: https://github.com/unit8co/darts
   doc_url: https://unit8co.github.io/darts/
 
