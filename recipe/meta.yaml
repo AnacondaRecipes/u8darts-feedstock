@@ -11,7 +11,8 @@ source:
 
 build:
   number: 0
-  skip: true  # [py<38]
+  # statsforecast, shap, and pyod are not available for s390x
+  skip: true  # [py<38 or s390x]
   patches:
     # For py38 one test fails after the change in this PR:
     # https://github.com/unit8co/darts/pull/1932/files
