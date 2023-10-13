@@ -29,7 +29,7 @@ outputs:
         - nfoursid >=1.0.0
         - numpy >=1.19.0
         - pandas >=1.0.5,<2.0.0  # [py<39]
-        - pandas>=1.0.5          # [py>=39]
+        - pandas >=1.0.5         # [py>=39]
         - pmdarima >=1.8.0
         - pyod >=0.9.5
         - requests >=2.22.0
