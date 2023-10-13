@@ -23,14 +23,14 @@ build:
     # 
     # In this patch we restore one line reverting to the
     # previous way of invoking the 'resample' function
-    - patches/001_fix-resample-restore-loffset.patch  # [py<39]
+    - patches/001_fix-resample-restore-loffset.patch
 
 outputs:
   - name: u8darts
     requirements:
       build:
-        - patch  # [py<39 and not win]
-        - m2-patch  # [py<39 and win]
+        - patch  # [not win]
+        - m2-patch  # [win]
       host:
         - python
         - pip
