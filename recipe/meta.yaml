@@ -15,7 +15,6 @@ build:
 
 outputs:
   - name: u8darts
-    script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
     requirements:
       host:
         - python
@@ -77,8 +76,6 @@ outputs:
         - pytest darts/tests
 
   - name: u8darts-notorch
-    script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
-
     requirements:
       host:
         - python
@@ -126,7 +123,6 @@ outputs:
         - pytest darts/tests
 
   - name: u8darts-torch
-    script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
     requirements:
       host:
         - python
@@ -174,7 +170,6 @@ outputs:
         - pytest darts/tests
 
   - name: u8darts-all
-    script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
     requirements:
       host:
         - python
