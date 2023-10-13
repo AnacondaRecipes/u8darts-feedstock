@@ -28,7 +28,8 @@ outputs:
         - matplotlib-base >=3.3.0
         - nfoursid >=1.0.0
         - numpy >=1.19.0
-        - pandas >=1.0.5
+        - pandas >=1.0.5,<2.0.0  # [py<39]
+        - pandas>=1.0.5          # [py>=39]
         - pmdarima >=1.8.0
         - pyod >=0.9.5
         - requests >=2.22.0
@@ -42,6 +43,7 @@ outputs:
         - typing-extensions
         - xarray >=0.17.0
         - xgboost >=1.6.0
+
     test:
       imports:
         - darts
