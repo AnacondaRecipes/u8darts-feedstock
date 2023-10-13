@@ -9,16 +9,13 @@ source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 724878deb4cf6ccac7bd20513065fbcace9857839a29e3902ea1aa14cc10484d
   patches:
-    # For py38 one test fails after the change in this PR:
+    # For py38 and py39 one test fails after the change in this PR:
     # https://github.com/unit8co/darts/pull/1932/files
     # in the file darts/tests/test_timeseries.py
     # 
-    # For py>38 using scipy 1.11.3 and xarray 2023.6.0
-    # solves the problem without patch.
-    # 
     # In this patch we restore one line reverting to the
     # previous way of invoking the 'resample' function
-    - patches/001_fix-resample-restore-loffset.patch  # [py<39]
+    - patches/001_fix-resample-restore-loffset.patch  # [py<310]
 
 build:
   number: 0
@@ -29,8 +26,8 @@ outputs:
   - name: u8darts
     requirements:
       build:
-        - patch  # [py<39 and not win]
-        - m2-patch  # [py<39 and win]
+        - patch  # [py<310 and not win]
+        - m2-patch  # [py<310 and win]
       host:
         - python
         - pip
