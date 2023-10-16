@@ -6,8 +6,10 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 724878deb4cf6ccac7bd20513065fbcace9857839a29e3902ea1aa14cc10484d
+  # it seems that in the pypi package the files are older than the one tagged as 0.26.0
+  # and anyway some tests fail. Also this tagged version is old by two commits, but it works.
+  url: https://github.com/unit8co/darts/archive/refs/tags/0.26.0.tar.gz
+  sha256: c4d895fbf44baba559f9639000f9da0cb70c28bea98f650805252b91f502ea01
   patches:
     # For py38 and py39 one test fails after the change in this PR:
     # https://github.com/unit8co/darts/pull/1932/files
@@ -26,7 +28,7 @@ outputs:
   - name: u8darts
     requirements:
       build:
-        - patch  # [py<310 and not win]
+        - patch     # [py<310 and not win]
         - m2-patch  # [py<310 and win]
       host:
         - python
@@ -45,7 +47,9 @@ outputs:
         - pmdarima >=1.8.0
         - pyod >=0.9.5
         - requests >=2.22.0
-        - scikit-learn >=1.0.1
+        # the upstream requires >=1.0.1 but tests fail
+        # the version 1.3.0 is the one making everything stable
+        - scikit-learn >=1.3.0
         - scipy >=1.3.2
         - shap >=0.40.0
         - statsforecast >=1.4.0
@@ -55,6 +59,10 @@ outputs:
         - typing-extensions
         - xarray >=0.17.0
         - xgboost >=1.6.0
+        # some tests fail if this pinning is not explicit
+        # because the version 2.8.3+snowflake will be picked
+        # up and apparently it's causing those tests fail
+        - python-dateutil 2.8.2
 
     test:
       imports:
