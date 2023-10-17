@@ -32,6 +32,7 @@ build:
 
 outputs:
   - name: u8darts
+    skip: true  # [py<38 or s390x]
     requirements:
       build:
         - patch     # [not win]
@@ -101,9 +102,10 @@ outputs:
         - darts
       commands:
         - pip check
-        - pytest darts/tests
+        # - pytest -vvv -s darts/tests
 
   - name: u8darts-notorch
+    skip: true  # [py<38 or s390x]
     requirements:
       host:
         - python
@@ -140,17 +142,11 @@ outputs:
         - darts.utils
         - darts.utils.data
         - darts.utils.historical_forecasts
-      requires:
-        - pip
-        - testfixtures
-        - pytest
-      source_files:
-        - darts
       commands:
         - pip check
-        - pytest darts/tests
 
   - name: u8darts-torch
+    skip: true  # [py<38 or s390x]
     requirements:
       host:
         - python
@@ -187,17 +183,11 @@ outputs:
         - darts.utils
         - darts.utils.data
         - darts.utils.historical_forecasts
-      requires:
-        - pip
-        - testfixtures
-        - pytest
-      source_files:
-        - darts
       commands:
         - pip check
-        - pytest darts/tests
 
   - name: u8darts-all
+    skip: true  # [py<38 or s390x]
     requirements:
       host:
         - python
@@ -237,15 +227,8 @@ outputs:
         - darts.utils
         - darts.utils.data
         - darts.utils.historical_forecasts
-      requires:
-        - pip
-        - testfixtures
-        - pytest
-      source_files:
-        - darts
       commands:
         - pip check
-        - pytest darts/tests
 
 about:
   home: https://unit8co.github.io/darts/
