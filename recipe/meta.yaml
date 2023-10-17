@@ -31,7 +31,7 @@ build:
   skip: true  # [py<38 or s390x]
 
 outputs:
-  - name: u8darts
+  - name: darts
     skip: true  # [py<38 or s390x]
     requirements:
       build:
@@ -104,6 +104,48 @@ outputs:
         - pip check
         # - pytest -vvv -s darts/tests
 
+  - name: u8darts
+    skip: true  # [py<38 or s390x]
+    requirements:
+      build:
+        - patch     # [not win]
+        - m2-patch  # [win]
+      host:
+        - python
+        - pip
+        - setuptools
+        - wheel
+      run:
+        - {{ pin_subpackage("darts", exact=True) }}
+
+    test:
+      imports:
+        - darts
+        - darts.ad
+        - darts.ad.aggregators
+        - darts.ad.anomaly_model
+        - darts.ad.detectors
+        - darts.ad.scorers
+        - darts.dataprocessing
+        - darts.dataprocessing.dtw
+        - darts.dataprocessing.encoders
+        - darts.dataprocessing.transformers
+        - darts.datasets
+        - darts.explainability
+        - darts.metrics
+        - darts.models
+        - darts.tests
+        - darts.tests.dataprocessing
+        - darts.tests.dataprocessing.transformers
+        - darts.tests.utils
+        - darts.utils
+        - darts.utils.data
+        - darts.utils.historical_forecasts
+      requires:
+        - pip
+      commands:
+        - pip check
+
   - name: u8darts-notorch
     skip: true  # [py<38 or s390x]
     requirements:
@@ -114,7 +156,7 @@ outputs:
         - wheel
       run:
         - python
-        - {{ pin_subpackage("u8darts", exact=True) }}
+        - {{ pin_subpackage("darts", exact=True) }}
         - catboost >=1.0.6
         - lightgbm >=3.2.0
         - prophet >=1.1.1
@@ -157,7 +199,7 @@ outputs:
         - wheel
       run:
         - python
-        - {{ pin_subpackage("u8darts", exact=True) }}
+        - {{ pin_subpackage("darts", exact=True) }}
         - pytorch-lightning >=1.5.0
         - tensorboardx >=2.1
         - pytorch >=1.8.0
@@ -200,7 +242,7 @@ outputs:
         - wheel
       run:
         - python
-        - {{ pin_subpackage("u8darts", exact=True) }}
+        - {{ pin_subpackage("darts", exact=True) }}
         - pytorch-lightning >=1.5.0
         - tensorboardx >=2.1
         - pytorch >=1.8.0
