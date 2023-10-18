@@ -22,7 +22,8 @@ build:
 
 outputs:
   - name: darts
-    skip: true  # [py<38 or s390x]
+    build:
+      skip: true  # [py<38 or s390x]
     requirements:
       build:
         - patch     # [not win]
@@ -95,7 +96,8 @@ outputs:
         # - pytest -vvv -s darts/tests
 
   - name: u8darts
-    skip: true  # [py<38 or s390x]
+    build:
+      skip: true  # [py<38 or s390x]
     requirements:
       host:
         - python
