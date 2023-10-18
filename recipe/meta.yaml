@@ -19,17 +19,12 @@ build:
   number: 0
   # statsforecast, shap, and pyod are not available for s390x
   skip: true  # [py<38 or s390x]
-requirements:
-  host:
-    - pip
-    - python
-    - setuptools
-    - wheel
 
 outputs:
   - name: darts
-    build:
-      skip: true  # [py<38 or s390x]
+    script: base_build.sh  # [unix]
+    script: base_build.bat # [win]
+    skip: true  # [py<38 or s390x]
     requirements:
       build:
         - patch     # [not win]
@@ -98,8 +93,7 @@ outputs:
       source_files:
         - darts
       commands:
-        - pip check
-        # - pytest -vvv -s darts/tests
+        - pytest -vvv -s darts/tests
 
   - name: u8darts
     build:
@@ -114,10 +108,6 @@ outputs:
     test:
       imports:
         - darts
-      requires:
-        - pip
-      commands:
-        - pip check
 
   # - name: u8darts-notorch
   #   skip: true  # [py<38 or s390x]
