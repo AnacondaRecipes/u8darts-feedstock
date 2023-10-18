@@ -10,18 +10,9 @@ source:
   url: https://github.com/unit8co/darts/archive/refs/tags/0.26.0.tar.gz
   sha256: c4d895fbf44baba559f9639000f9da0cb70c28bea98f650805252b91f502ea01
   patches:
-    # For py38 and py39 one test fails after the change in this PR:
-    # https://github.com/unit8co/darts/pull/1932/files
-    # in the file darts/tests/test_timeseries.py
-    # 
     # For some reason the selectors [py38 or py39] and [py<310] do
     # not work, so the patch is applied for all Python versions.
-    #
-    # In this patch we restore one line reverting to the
-    # previous way of invoking the 'resample' function
     - patches/001_fix-resample-restore-loffset.patch
-    # This patch add 3 retries when testing downloading dataset files
-    # because on large files, sometimes the connection gets interrupted
     - patches/002_fix-test-dataset-loaders.patch
 
 build:

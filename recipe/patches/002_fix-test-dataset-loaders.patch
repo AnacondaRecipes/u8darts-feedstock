@@ -1,3 +1,16 @@
+Mon Sep 17 00:00:00 2001
+From: Lorenzo Pirritano <lpirritano@anaconda.com>
+Date: Tue, 17 Oct 2023 18:56:53 +0200
+Subject: [PATCH] add 3 retries when testing downloading dataset files
+
+This patch add 3 retries when testing downloading dataset files
+because on large files, sometimes the connection gets interrupted.
+
+Only the test source code gets patched. Ideally the two downloaders
+_download_dataset and _download_zip_dataset in dataset_loaders.py
+should be fixed (downloading in chunks should reduce connection's drops).
+
+---
 diff --git a/darts/tests/datasets/test_dataset_loaders.py b/darts/tests/datasets/test_dataset_loaders.py
 index 8fd076b8..5ddcf6d6 100644
 --- a/darts/tests/datasets/test_dataset_loaders.py

@@ -1,3 +1,16 @@
+Mon Sep 17 00:00:00 2001
+From: Lorenzo Pirritano <lpirritano@anaconda.com>
+Date: Tue, 17 Oct 2023 18:56:53 +0200
+Subject: [PATCH] invoke 'resample' function in test before PR 1932
+
+For py38 and py39 one test fails after the change in this PR:
+https://github.com/unit8co/darts/pull/1932/files
+in the file darts/tests/test_timeseries.py
+
+In this patch we restore one line reverting to the
+previous way of invoking the 'resample' function
+
+---
 diff --git a/darts/tests/test_timeseries.py b/darts/tests/test_timeseries.py
 index 10551182..4099c2d3 100644
 --- a/darts/tests/test_timeseries.py
