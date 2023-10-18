@@ -19,6 +19,12 @@ build:
   number: 0
   # statsforecast, shap, and pyod are not available for s390x
   skip: true  # [py<38 or s390x]
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools
+    - wheel
 
 outputs:
   - name: darts
