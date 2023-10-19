@@ -13,7 +13,6 @@ source:
     # For some reason the selectors [py38 or py39] and [py<310] do
     # not work, so the patch is applied for all Python versions.
     - patches/001_fix-resample-restore-loffset.patch
-    - patches/002_fix-test-dataset-loaders.patch
 
 build:
   number: 0
