@@ -93,7 +93,7 @@ outputs:
       source_files:
         - darts
       commands:
-        - pytest -vvv -s darts/tests
+        - pytest -vvv -s -m "not slow" darts/tests
 
   - name: u8darts
     skip: true  # [py<38 or s390x]
