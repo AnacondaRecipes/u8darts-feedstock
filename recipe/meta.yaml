@@ -254,3 +254,4 @@ extra:
   recipe-maintainers:
     - hrzn
     - dennisbader
+  feedstock-name: darts
