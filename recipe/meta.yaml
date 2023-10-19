@@ -120,26 +120,6 @@ outputs:
     test:
       imports:
         - darts
-        - darts.ad
-        - darts.ad.aggregators
-        - darts.ad.anomaly_model
-        - darts.ad.detectors
-        - darts.ad.scorers
-        - darts.dataprocessing
-        - darts.dataprocessing.dtw
-        - darts.dataprocessing.encoders
-        - darts.dataprocessing.transformers
-        - darts.datasets
-        - darts.explainability
-        - darts.metrics
-        - darts.models
-        - darts.tests
-        - darts.tests.dataprocessing
-        - darts.tests.dataprocessing.transformers
-        - darts.tests.utils
-        - darts.utils
-        - darts.utils.data
-        - darts.utils.historical_forecasts
       requires:
         - pip      
       commands:
