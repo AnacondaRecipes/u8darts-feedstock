@@ -96,8 +96,6 @@ outputs:
         - pytest -vvv -s darts/tests
 
   - name: u8darts
-    script: base_build.sh  # [unix]
-    script: base_build.bat # [win]
     skip: true  # [py<38 or s390x]
     requirements:
       host:
