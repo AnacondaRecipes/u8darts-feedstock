@@ -85,12 +85,14 @@ outputs:
         - darts.utils.data
         - darts.utils.historical_forecasts
       requires:
-        - pip
         - testfixtures
         - pytest
       source_files:
         - darts
       commands:
+        # Do not run `pip check` here as this sub-package hasn't dependencies from torch.txt,
+        # see https://github.com/unit8co/darts/blob/0.26.0/requirements/torch.txt
+
         # skip tests marked as slow (pytest.mark.slow)
         - pytest -vvv -s -m "not slow" darts/tests
 
@@ -106,13 +108,14 @@ outputs:
       imports:
         - darts
 
-  - name: u8darts-notorch
+  - name: darts-notorch
     requirements:
       host:
         - python
       run:
         - python
         - {{ pin_subpackage("darts", exact=True) }}
+        # Dependencies from https://github.com/unit8co/darts/blob/0.26.0/requirements/notorch.txt
         - catboost >=1.0.6
         - lightgbm >=3.2.0
         - prophet >=1.1.1
@@ -120,18 +123,15 @@ outputs:
     test:
       imports:
         - darts
-      requires:
-        - pip      
-      commands:
-        - pip check
 
-  - name: u8darts-torch
+  - name: darts-torch
     requirements:
       host:
         - python
       run:
         - python
         - {{ pin_subpackage("darts", exact=True) }}
+        # Dependencies from torch.txt, see https://github.com/unit8co/darts/blob/0.26.0/requirements/torch.txt
         - pytorch-lightning >=1.5.0
         - tensorboardx >=2.1
         - pytorch >=1.8.0
@@ -139,12 +139,8 @@ outputs:
     test:
       imports:
         - darts
-      requires:
-        - pip
-      commands:
-        - pip check
 
-  - name: u8darts-all
+  - name: darts-all
     requirements:
       host:
         - python
