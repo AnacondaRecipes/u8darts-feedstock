@@ -14,18 +14,17 @@ source:
     # For some reason the selectors [py38 or py39] and [py<310] do
     # not work, so the patch is applied for all Python versions.
     - patches/001_fix-resample-restore-loffset.patch
-    - patches/002_add-latest-two-commits-0-26-0.patch
+    - patches/002_add-latest-commit-0-26-0.patch
 
 build:
   number: 0
   # statsforecast, shap, and pyod are not available for s390x
   # catboost is not available for ppc64le
-  skip: true  # [py<38 or s390x or ppc64le or not arm64]
+  skip: true  # [py<38 or s390x or ppc64le]
 
 outputs:
   - name: {{ name }}
-    script: base_build.sh  # [unix]
-    script: base_build.bat # [win]
+    script: python -m pip install . --no-deps --no-build-isolation -vv
     requirements:
       build:
         - patch     # [not win]
