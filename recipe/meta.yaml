@@ -19,7 +19,7 @@ source:
 build:
   number: 0
   # statsforecast, shap, and pyod are not available for s390x
-  skip: true  # [py<38 or s390x]
+  skip: true  # [py<38 or s390x or (not (arm64 or win))]
 
 outputs:
   - name: {{ name }}
@@ -94,17 +94,27 @@ outputs:
         # skip tests marked as slow (pytest.mark.slow)
         - pytest darts/tests -vv -s -m "not slow"  # [linux]
 
-        # skip test_models_performance[config21] on osx because of `AssertionError: AutoARIMA() model exceeded the maximum MAPE of 12.`
+        
+        # skip
+        # test_models_performance[config21] on osx because of `AssertionError: AutoARIMA() model exceeded the maximum MAPE of 12.`
+
         # skip 
         #   test_models_accuracy_univariate
         #   test_models_accuracy_multivariate
         #   test_xgboost_with_eval_set
         #   test_models_accuracy_multiseries_multivariate
         # on osx because of  'OMP: Error #13: Assertion failure at kmp_dispatch.cpp(1298).'
+        
+        {% set osx_arm64_tests_to_skip = "" %}  # [osx]
         # skip 
         #   test_models_runnability 
+        {% set osx_arm64_tests_to_skip = osx_arm64_tests_to_skip + "test_models_runnability" %}  # [arm64]
         # on osx-arm64 because of  'OMP: Error #13: Assertion failure at kmp_dispatch.cpp(1298).'
-        - pytest darts/tests -vv -s -m "not slow" -k "not (test_models_performance[config21] or test_models_accuracy_univariate or test_models_accuracy_multivariate or test_xgboost_with_eval_set or test_models_accuracy_multiseries_multivariate or test_models_runnability)"  # [osx]
+        #   test_models_performance
+        {% set osx_arm64_tests_to_skip = osx_arm64_tests_to_skip + "test_models_performance" %}  # [arm64]
+        # on osx-arm64 because of 'Fatal Python error: Segmentation fault'
+        
+        - pytest darts/tests -vv -s -m "not slow" -k "not (test_models_performance[config21] or test_models_accuracy_univariate or test_models_accuracy_multivariate or test_xgboost_with_eval_set or test_models_accuracy_multiseries_multivariate or {{ osx_arm64_tests_to_skip }})"  # [osx]
         # skip tests on win:
         # - test_from_csv because of PermissionError
         # - test_time_col_convert_string_integers, test_time_col_convert_integers because of `AssertionError: assert dtype('int64') == int`
