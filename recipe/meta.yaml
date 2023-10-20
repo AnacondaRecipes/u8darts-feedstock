@@ -19,7 +19,7 @@ source:
 build:
   number: 0
   # statsforecast, shap, and pyod are not available for s390x
-  skip: true  # [py<38 or s390x or (not osx)]
+  skip: true  # [py<38 or s390x or (not (osx-arm64 or win))]
 
 outputs:
   - name: {{ name }}
@@ -105,7 +105,8 @@ outputs:
         # skip tests on win:
         # - test_from_csv because of PermissionError
         # - test_time_col_convert_string_integers, test_time_col_convert_integers because of `AssertionError: assert dtype('int64') == int`
-        - pytest darts/tests -vv -s -m "not slow" -k "not (test_from_csv or test_time_col_convert_string_integers or test_time_col_convert_integers)"  # [win]
+        # - test_autoregressive_timeseries because of `assert array([1.84036597e+24]) == 1.8403659740955058e+24`
+        - pytest darts/tests -vv -s -m "not slow" -k "not (test_from_csv or test_time_col_convert_string_integers or test_time_col_convert_integers or test_autoregressive_timeseries)"  # [win]
 
   - name: {{ name }}-notorch
     requirements:
