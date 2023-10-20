@@ -108,7 +108,9 @@ outputs:
         {% set osx_arm64_tests_to_skip = "" %}  # [osx]
         # skip 
         #   test_models_runnability 
-        {% set osx_arm64_tests_to_skip = osx_arm64_tests_to_skip + "test_models_runnability" %}  # [arm64]
+        #   test_encoders
+        {% set osx_arm64_tests_to_skip = osx_arm64_tests_to_skip + "test_models_runnability" %}      # [arm64]
+        {% set osx_arm64_tests_to_skip = osx_arm64_tests_to_skip + " or test_encoders" %}            # [arm64]
         # on osx-arm64 because of  'OMP: Error #13: Assertion failure at kmp_dispatch.cpp(1298).'
         #   test_models_performance
         {% set osx_arm64_tests_to_skip = osx_arm64_tests_to_skip + " or test_models_performance" %}  # [arm64]
