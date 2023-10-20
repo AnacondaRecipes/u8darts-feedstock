@@ -168,7 +168,7 @@ outputs:
         # dummy test; actual tests are in the `darts` subpackage
         - darts
 
-  # u8darts  is a synonym of the `darts-all` subpackage, see https://github.com/unit8co/darts/blob/master/setup_u8darts.py
+  # u8darts-all is a synonym of the `darts-all` subpackage, see https://github.com/unit8co/darts/blob/master/setup_u8darts.py
   - name: u8darts-all
     requirements:
       host:
