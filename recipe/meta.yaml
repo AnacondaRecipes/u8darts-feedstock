@@ -19,7 +19,8 @@ source:
 build:
   number: 0
   # statsforecast, shap, and pyod are not available for s390x
-  skip: true  # [py<38 or s390x or (not (arm64 or win))]
+  # catboost is not available for ppc64le
+  skip: true  # [py<38 or s390x or ppc64le]
 
 outputs:
   - name: {{ name }}
@@ -117,6 +118,7 @@ outputs:
         # on osx-arm64 because of 'Fatal Python error: Segmentation fault'
         
         - pytest darts/tests -vv -s -m "not slow" -k "not (test_models_performance[config21] or test_models_accuracy_univariate or test_models_accuracy_multivariate or test_xgboost_with_eval_set or test_models_accuracy_multiseries_multivariate or {{ osx_arm64_tests_to_skip }})"  # [osx]
+
         # skip tests on win:
         # - test_from_csv because of PermissionError
         # - test_time_col_convert_string_integers, test_time_col_convert_integers because of `AssertionError: assert dtype('int64') == int`
@@ -176,7 +178,8 @@ outputs:
         - pip
       commands:
         # `pip check` should be inside the `darts-all` subpackage only
-        - pip check
+        # for `win` the `darts-all` requires `xgboost` which is there but not detected by `pip`
+        - pip check  # [not win]
 
   # u8darts is a synonym of the `darts` subpackage. It has it's onw PyPi that is fully project fully to darts
   # see https://pypi.org/project/u8darts/ and https://pypi.org/project/darts/
