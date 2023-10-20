@@ -1,13 +1,14 @@
+{% set name = "darts" %}
 {% set version = "0.26.0" %}
 
 package:
-  name: darts-packages
+  name: {{ name }}-packages
   version: {{ version }}
 
 source:
   # it seems that in the pypi package the files are older than the one tagged as 0.26.0
   # and anyway some tests fail. Also this tagged version is old by two commits, but it works.
-  url: https://github.com/unit8co/darts/archive/refs/tags/0.26.0.tar.gz
+  url: https://github.com/unit8co/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
   sha256: c4d895fbf44baba559f9639000f9da0cb70c28bea98f650805252b91f502ea01
   patches:
     # For some reason the selectors [py38 or py39] and [py<310] do
@@ -20,7 +21,7 @@ build:
   skip: true  # [py<38 or s390x]
 
 outputs:
-  - name: darts
+  - name: {{ name }}
     script: base_build.sh  # [unix]
     script: base_build.bat # [win]
     requirements:
@@ -99,7 +100,7 @@ outputs:
         # - test_time_col_convert_string_integers, test_time_col_convert_integers because of `AssertionError: assert dtype('int64') == int`
         - pytest darts/tests -vv -s -m "not slow" -k "not (test_from_csv or test_time_col_convert_string_integers or test_time_col_convert_integers)"  # [win]
 
-  - name: darts-notorch
+  - name: {{ name }}-notorch
     requirements:
       host:
         - python
@@ -115,7 +116,7 @@ outputs:
         # dummy test; actual tests are in the `darts` subpackage
         - darts
 
-  - name: darts-torch
+  - name: {{ name }}-torch
     requirements:
       host:
         - python
@@ -131,7 +132,7 @@ outputs:
         # dummy test; actual tests are in the `darts` subpackage
         - darts
 
-  - name: darts-all
+  - name: {{ name }}-all
     requirements:
       host:
         - python
