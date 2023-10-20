@@ -24,7 +24,8 @@ build:
 
 outputs:
   - name: {{ name }}
-    script: python -m pip install . --no-deps --no-build-isolation -vv
+    script: base_build.sh  # [unix]
+    script: base_build.bat # [win]
     requirements:
       build:
         - patch     # [not win]
