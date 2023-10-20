@@ -19,7 +19,7 @@ source:
 build:
   number: 0
   # statsforecast, shap, and pyod are not available for s390x
-  skip: true  # [py<38 or s390x or (not (osx-arm64 or win))]
+  skip: true  # [py<38 or s390x or (not (osx or win))]
 
 outputs:
   - name: {{ name }}
