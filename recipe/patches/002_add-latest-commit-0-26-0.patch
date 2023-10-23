@@ -1,0 +1,82 @@
+From 2f7c9dbb0e9e281cb1d74d609748a2b84fcec969 Mon Sep 17 00:00:00 2001
+From: dennisbader <dennisbader@users.noreply.github.com>
+Date: Sat, 16 Sep 2023 17:34:06 +0000
+Subject: [PATCH] Release 0.26.0
+
+The author forgot to change the version number and did it in a commit
+after the tag 0.26.0. This is that exact commit.
+
+---
+ .bumpversion.cfg             | 2 +-
+ conda_recipe/darts/meta.yaml | 2 +-
+ darts/__init__.py            | 2 +-
+ docs/source/conf.py          | 2 +-
+ setup.py                     | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/.bumpversion.cfg b/.bumpversion.cfg
+index 7b1790c1..c03d5297 100644
+--- a/.bumpversion.cfg
++++ b/.bumpversion.cfg
+@@ -1,6 +1,6 @@
+ [bumpversion]
+ parse = (?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)|dev
+-current_version = 0.25.0
++current_version = 0.26.0
+ 
+ [bumpversion:file:setup.py]
+ 
+diff --git a/conda_recipe/darts/meta.yaml b/conda_recipe/darts/meta.yaml
+index da37ef0d..f25c8547 100644
+--- a/conda_recipe/darts/meta.yaml
++++ b/conda_recipe/darts/meta.yaml
+@@ -2,7 +2,7 @@
+ 
+ package:
+   name: "darts"
+-  version: "0.25.0"
++  version: "0.26.0"
+ 
+ source:
+   # root folder, not the package
+diff --git a/darts/__init__.py b/darts/__init__.py
+index 89a075c2..60eff216 100644
+--- a/darts/__init__.py
++++ b/darts/__init__.py
+@@ -10,7 +10,7 @@ from matplotlib import cycler
+ 
+ from .timeseries import TimeSeries, concatenate
+ 
+-__version__ = "0.25.0"
++__version__ = "0.26.0"
+ 
+ colors = cycler(
+     color=["black", "003DFD", "b512b8", "11a9ba", "0d780f", "f77f07", "ba0f0f"]
+diff --git a/docs/source/conf.py b/docs/source/conf.py
+index a9578186..dd4017a7 100644
+--- a/docs/source/conf.py
++++ b/docs/source/conf.py
+@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.abspath("../../.."))
+ project = "darts"
+ copyright = f"2020 - {datetime.now().year}, Unit8 SA (Apache 2.0 License)"
+ author = "Unit8 SA"
+-version = "0.25.0"
++version = "0.26.0"
+ 
+ 
+ # -- General configuration ---------------------------------------------------
+diff --git a/setup.py b/setup.py
+index aae7c4b1..fea08ee4 100644
+--- a/setup.py
++++ b/setup.py
+@@ -30,7 +30,7 @@ PROJECT_URLS = {
+ 
+ setup(
+     name="darts",
+-    version="0.25.0",
++    version="0.26.0",
+     description="A python library for easy manipulation and forecasting of time series.",
+     long_description=LONG_DESCRIPTION,
+     long_description_content_type="text/markdown",
+
+
