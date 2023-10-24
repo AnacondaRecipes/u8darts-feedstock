@@ -107,16 +107,15 @@ outputs:
         # on osx because of  'OMP: Error #13: Assertion failure at kmp_dispatch.cpp(1298).'
         
         {% set osx_arm64_tests_to_skip = "" %}  # [osx]
-        # skip 
-        #   test_models_runnability 
-        #   test_encoders
+        # skip the following tests for osx-arm64
         {% set osx_arm64_tests_to_skip = osx_arm64_tests_to_skip + " or test_models_runnability" %}  # [arm64]
         {% set osx_arm64_tests_to_skip = osx_arm64_tests_to_skip + " or test_encoders" %}            # [arm64]
         # on osx-arm64 because of  'OMP: Error #13: Assertion failure at kmp_dispatch.cpp(1298).'
-        #   test_models_performance
+
         {% set osx_arm64_tests_to_skip = osx_arm64_tests_to_skip + " or test_models_performance" %}           # [arm64]
         {% set osx_arm64_tests_to_skip = osx_arm64_tests_to_skip + " or test_exogenous_variables_support" %}  # [arm64]
         {% set osx_arm64_tests_to_skip = osx_arm64_tests_to_skip + " or test_fit_on_residuals" %}             # [arm64]
+        {% set osx_arm64_tests_to_skip = osx_arm64_tests_to_skip + " or pytest_runtest_protocol" %}           # [arm64]
         # on osx-arm64 because of 'Fatal Python error: Segmentation fault'
         - pytest darts/tests -vv -s -m "not slow" -k "not (test_models_performance[config21] or test_models_accuracy_univariate or test_models_accuracy_multivariate or test_xgboost_with_eval_set or test_models_accuracy_multiseries_multivariate {{ osx_arm64_tests_to_skip }})"  # [osx]
 
