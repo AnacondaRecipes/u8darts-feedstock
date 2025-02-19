@@ -92,7 +92,7 @@ outputs:
         - pytest
         # - statsforecast >=1.4  # build  # added
       source_files:
-        - darts
+        - darts/tests
       commands:
         - pytest darts/tests -vv -s -m "not slow"
 
