@@ -1,5 +1,5 @@
 {% set name = "u8darts" %}
-{% set version = "0.26.0" %}
+{% set version = "0.33.0" %}
 
 package:
   name: {{ name }}-packages
@@ -8,28 +8,28 @@ package:
 source:
   # it seems that in the pypi package the files are older than the one tagged as 0.26.0
   # and anyway some tests fail. Also this tagged version is old by two commits, but it works.
-  url: https://github.com/unit8co/darts/archive/refs/tags/0.26.0.tar.gz
-  sha256: c4d895fbf44baba559f9639000f9da0cb70c28bea98f650805252b91f502ea01
-  patches:
-    # For some reason the selectors [py38 or py39] and [py<310] do
-    # not work, so the patch is applied for all Python versions.
-    - patches/001_fix-resample-restore-loffset.patch
-    - patches/002_add-latest-commit-0-26-0.patch
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/u8darts-{{ version }}.tar.gz
+  sha256: 9db947a8b3c3428c6860dbfd4d01d072d8245f884b51aaad74a5f6a48a5015c9
+  # patches:
+  #   # For some reason the selectors [py38 or py39] and [py<310] do
+  #   # not work, so the patch is applied for all Python versions.
+  #   - patches/001_fix-resample-restore-loffset.patch
+  #   - patches/002_add-latest-commit-0-26-0.patch
 
 build:
   number: 0
   # statsforecast, shap, and pyod are not available for s390x
   # catboost is not available for ppc64le
-  skip: true  # [py<38 or s390x or ppc64le]
+  skip: true  # [py<39 or s390x or ppc64le]
 
 outputs:
   - name: {{ name }}
     script: base_build.sh   # [unix]
     script: base_build.bat  # [win]
     requirements:
-      build:
-        - patch     # [not win]
-        - m2-patch  # [win]
+      # build:
+      #   - patch     # [not win]
+      #   - m2-patch  # [win]
       host:
         - python
         - pip
@@ -40,19 +40,16 @@ outputs:
         - holidays >=0.11.1
         - joblib >=0.16.0
         - matplotlib-base >=3.3.0
-        - nfoursid >=1.0.0
-        - numpy >=1.19.0
-        - pandas >=1.0.5,<2.0.0  # [py<39]
-        - pandas >=1.0.5         # [py>=39]
+        - nfoursid >=1.0.0  # build
+        - numpy >=1.19.0,<2.0.0
+        - pandas >=1.0.5
         - pmdarima >=1.8.0
         - pyod >=0.9.5
         - requests >=2.22.0
-        # the upstream requires >=1.0.1 but tests fail
-        # the version 1.3.0 is the one making everything stable
-        - scikit-learn >=1.3.0
+        - scikit-learn >=1.0.1
         - scipy >=1.3.2
         - shap >=0.40.0
-        - statsforecast >=1.4.0
+        - statsforecast >=1.4  # build
         - statsmodels >=0.14.0
         - tbats >=1.1.0
         - tqdm >=4.60.0
@@ -83,48 +80,21 @@ outputs:
         - darts.utils
         - darts.utils.data
         - darts.utils.historical_forecasts
+        - darts.models.forecasting.croston.Croston
+        - darts.models.forecasting.sf_auto_arima.StatsForecastAutoARIMA
+        - darts.models.forecasting.sf_auto_ces.StatsForecastAutoCES
+        - darts.models.forecasting.sf_auto_ets.StatsForecastAutoETS
+        - darts.models.forecasting.sf_auto_tbats.StatsForecastAutoTBATS
+        - darts.models.forecasting.sf_auto_theta.StatsForecastAutoTheta
+
       requires:
         - testfixtures
         - pytest
+        # - statsforecast >=1.4  # build  # added
       source_files:
         - darts
       commands:
-        # Do not run `pip check` here as this sub-package hasn't dependencies from torch.txt,
-        # see https://github.com/unit8co/darts/blob/0.26.0/requirements/torch.txt
-
-        # skip tests marked as slow (pytest.mark.slow)
-        - pytest darts/tests -vv -s -m "not slow"  # [linux]
-
-        
-        # skip
-        # test_models_performance[config21] on osx because of `AssertionError: AutoARIMA() model exceeded the maximum MAPE of 12.`
-
-        # skip 
-        #   test_models_accuracy_univariate
-        #   test_models_accuracy_multivariate
-        #   test_xgboost_with_eval_set
-        #   test_models_accuracy_multiseries_multivariate
-        # on osx because of  'OMP: Error #13: Assertion failure at kmp_dispatch.cpp(1298).'
-        
-        {% set osx_arm64_tests_to_skip = "" %}  # [osx]
-        # skip the following tests for osx-arm64
-        {% set osx_arm64_tests_to_skip = osx_arm64_tests_to_skip + " or test_models_runnability" %}  # [arm64]
-        {% set osx_arm64_tests_to_skip = osx_arm64_tests_to_skip + " or test_encoders" %}            # [arm64]
-        # on osx-arm64 because of  'OMP: Error #13: Assertion failure at kmp_dispatch.cpp(1298).'
-
-        {% set osx_arm64_tests_to_skip = osx_arm64_tests_to_skip + " or test_models_performance" %}           # [arm64]
-        {% set osx_arm64_tests_to_skip = osx_arm64_tests_to_skip + " or test_exogenous_variables_support" %}  # [arm64]
-        {% set osx_arm64_tests_to_skip = osx_arm64_tests_to_skip + " or test_fit_on_residuals" %}             # [arm64]
-        {% set osx_arm64_tests_to_skip = osx_arm64_tests_to_skip + " or pytest_runtest_protocol" %}           # [arm64]
-        {% set osx_arm64_tests_to_skip = osx_arm64_tests_to_skip + " or test_fit_a_linreg" %}                 # [arm64]
-        # on osx-arm64 because of 'Fatal Python error: Segmentation fault'
-        - pytest darts/tests -vv -s -m "not slow" -k "not (test_models_performance[config21] or test_models_accuracy_univariate or test_models_accuracy_multivariate or test_xgboost_with_eval_set or test_models_accuracy_multiseries_multivariate {{ osx_arm64_tests_to_skip }})"  # [osx]
-
-        # skip tests on win:
-        # - test_from_csv because of PermissionError
-        # - test_time_col_convert_string_integers, test_time_col_convert_integers because of `AssertionError: assert dtype('int64') == int`
-        # - test_autoregressive_timeseries because of `assert array([1.84036597e+24]) == 1.8403659740955058e+24`
-        - pytest darts/tests -vv -s -m "not slow" -k "not (test_from_csv or test_time_col_convert_string_integers or test_time_col_convert_integers or test_autoregressive_timeseries)"  # [win]
+        - pytest darts/tests -vv -s -m "not slow"
 
   - name: {{ name }}-notorch
     requirements:
@@ -204,3 +174,6 @@ extra:
   recipe-maintainers:
     - hrzn
     - dennisbader
+
+
+
