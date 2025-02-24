@@ -117,9 +117,11 @@ outputs:
         {% set skip_tests = skip_tests + " and not test_backtest_bad_covariates" %}  # [linux]
 
         # because of PermissionError
-        {% set skip_tests = skip_tests + " and not test_ts_methods_with_static_covariates" %}  # [win]
-        {% set skip_tests = skip_tests + " and not test_operations" %}  # [win]
-        {% set skip_tests = skip_tests + " and not test_get_item" %}  # [win]
+        # {% set skip_tests = skip_tests + " and not test_ts_methods_with_static_covariates" %}  # [win]
+        # {% set skip_tests = skip_tests + " and not test_non_numerical_static_covariates" %}  # [win]
+        # {% set skip_tests = skip_tests + " and not test_operations" %}  # [win]
+        # {% set skip_tests = skip_tests + " and not test_get_item" %}  # [win]
+        {% set ignore_tests = ignore_tests + " --ignore=darts/tests/test_timeseries_static_covariates.py" %}  # [win]
         {% set skip_tests = skip_tests + " and not test_from_csv" %}  # [win]
 
         # AssertionError
