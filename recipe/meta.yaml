@@ -88,7 +88,8 @@ outputs:
         - darts/tests
         - pyproject.toml  # for test marks
       commands:
-        - pip check  # [not (osx and x86_64)]  # 'plotly-resampler 0.8.3.2 is not supported on this platform'
+        # "plotly-resampler 0.8.3.2 is not supported on this platform"
+        - pip check  # [not (osx and x86_64)]
         # Import issue of the following classes:
         # - darts.models.forecasting.croston.Croston
         # - darts.models.forecasting.sf_auto_arima.StatsForecastAutoARIMA
