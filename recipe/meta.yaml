@@ -113,7 +113,9 @@ outputs:
         {% set skip_tests = skip_tests + " and not test_backtest_bad_covariates" %}  # [linux]
 
         # because of PermissionError
+        {% set skip_tests = skip_tests + " and not test_ts_methods_with_static_covariates" %}  # [win]
         {% set skip_tests = skip_tests + " and not test_from_csv" %}  # [win]
+
 
         - pytest darts/tests -vv -s -m "not slow" {{ ignore_tests }}  # [not (linux or win)]
         - pytest darts/tests -vv -s -m "not slow" -k "{{ skip_tests }}" {{ ignore_tests }}  # [linux or win]
