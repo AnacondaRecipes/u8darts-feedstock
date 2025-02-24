@@ -56,6 +56,8 @@ outputs:
         - typing-extensions
         - xarray >=0.17.0
         - xgboost >=1.6.0
+      run_constrained:
+        - blas=*=openblas  # [osx and x86_64]
 
     test:
       imports:
