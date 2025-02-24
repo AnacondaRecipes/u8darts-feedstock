@@ -120,7 +120,7 @@ outputs:
         {% set skip_tests = skip_tests + " and not test_operations" %}  # [win]
         {% set skip_tests = skip_tests + " and not test_from_csv" %}  # [win]
 
-
+        - set OMP_NUM_THREADS=1  # [win]
         - pytest darts/tests -vv -s -m "not slow" {{ ignore_tests }}  # [not (linux or win)]
         - pytest darts/tests -vv -s -m "not slow" -k "{{ skip_tests }}" {{ ignore_tests }}  # [linux or win]
 
