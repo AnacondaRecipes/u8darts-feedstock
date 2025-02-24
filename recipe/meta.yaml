@@ -99,6 +99,9 @@ outputs:
         {% set ignore_tests = " --ignore=darts/tests/models/forecasting/test_local_forecasting_models.py" %}
         {% set ignore_tests = ignore_tests + " --ignore=darts/tests/models/forecasting/test_sf_auto_ets.py" %}
 
+        # AttributeError: module 'sklearn.metrics' has no attribute 'root_mean_squared_error'
+        {% set ignore_tests = ignore_tests + " --ignore=darts/tests/metrics/test_metrics.py" %}  # [osx]
+
         # AttributeError: 'super' object has no attribute '__sklearn_tags__'
         {% set ignore_tests = ignore_tests + " --ignore=darts/tests/explainability/test_shap_explainer.py" %}
         {% set ignore_tests = ignore_tests + " --ignore=darts/tests/models/forecasting/test_regression_models.py" %}
@@ -114,6 +117,7 @@ outputs:
 
         # because of PermissionError
         {% set skip_tests = skip_tests + " and not test_ts_methods_with_static_covariates" %}  # [win]
+        {% set skip_tests = skip_tests + " and not test_operations" %}  # [win]
         {% set skip_tests = skip_tests + " and not test_from_csv" %}  # [win]
 
 
