@@ -88,7 +88,7 @@ outputs:
         - darts/tests
         - pyproject.toml  # for test marks
       commands:
-        - pip check
+        - pip check  # [not (osx and x86_64)]  # 'plotly-resampler 0.8.3.2 is not supported on this platform'
         # Import issue of the following classes:
         # - darts.models.forecasting.croston.Croston
         # - darts.models.forecasting.sf_auto_arima.StatsForecastAutoARIMA
@@ -125,7 +125,7 @@ outputs:
         {% set skip_tests = "not test_kalman_missing_values" %}  # [osx]
 
         - set OMP_NUM_THREADS=1  # [win]
-        - pytest darts/tests -vv -s -m "not slow" {{ ignore_tests }}  # [not (linux or win)]
+        - pytest darts/tests -vv -s -m "not slow" {{ ignore_tests }}  # [not (linux or win or osx)]
         - pytest darts/tests -vv -s -m "not slow" -k "{{ skip_tests }}" {{ ignore_tests }}  # [linux or win or osx]
 
   - name: {{ name }}-notorch
