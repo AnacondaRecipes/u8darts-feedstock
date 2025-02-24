@@ -121,11 +121,11 @@ outputs:
         {% set skip_tests = skip_tests + " and not test_from_csv" %}  # [win]
 
         # AssertionError
-        {% set skip_tests = skip_tests + "TestKalmanFilter::test_kalman_missing_values" %}  # [osx]
+        {% set skip_tests = "not TestKalmanFilter::test_kalman_missing_values" %}  # [osx]
 
         - set OMP_NUM_THREADS=1  # [win]
         - pytest darts/tests -vv -s -m "not slow" {{ ignore_tests }}  # [not (linux or win)]
-        - pytest darts/tests -vv -s -m "not slow" -k "{{ skip_tests }}" {{ ignore_tests }}  # [linux or win]
+        - pytest darts/tests -vv -s -m "not slow" -k "{{ skip_tests }}" {{ ignore_tests }}  # [linux or win or osx]
 
   - name: {{ name }}-notorch
     requirements:
