@@ -194,7 +194,7 @@ outputs:
       commands:
         # `pip check` should be inside the `darts-all` subpackage only
         # for `win` the `darts-all` requires `xgboost` which is there but not detected by `pip`
-        - pip check  # [not win]
+        - pip check  # [not win and not (osx and x86_64)]
 
 about:
   home: https://unit8co.github.io/darts/
