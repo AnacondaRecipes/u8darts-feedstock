@@ -8,13 +8,8 @@ package:
 source:
   # it seems that in the pypi package the files are older than the one tagged as 0.26.0
   # and anyway some tests fail. Also this tagged version is old by two commits, but it works.
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/u8darts-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 9db947a8b3c3428c6860dbfd4d01d072d8245f884b51aaad74a5f6a48a5015c9
-  # patches:
-  #   # For some reason the selectors [py38 or py39] and [py<310] do
-  #   # not work, so the patch is applied for all Python versions.
-  #   - patches/001_fix-resample-restore-loffset.patch
-  #   - patches/002_add-latest-commit-0-26-0.patch
 
 build:
   number: 0
