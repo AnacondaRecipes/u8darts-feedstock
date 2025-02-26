@@ -22,9 +22,6 @@ outputs:
     script: base_build.sh   # [unix]
     script: base_build.bat  # [win]
     requirements:
-      # build:
-      #   - patch     # [not win]
-      #   - m2-patch  # [win]
       host:
         - python
         - pip
