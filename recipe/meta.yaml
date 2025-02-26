@@ -87,7 +87,7 @@ outputs:
       commands:
         # "plotly-resampler 0.8.3.2 is not supported on this platform"
         - pip check  # [not (osx and x86_64)]
-        # Import issue of the following classes:
+        # Because of not having statsforecast 1.7.2+, import issue of the following classes:
         # - darts.models.forecasting.croston.Croston
         # - darts.models.forecasting.sf_auto_arima.StatsForecastAutoARIMA
         # - darts.models.forecasting.sf_auto_ces.StatsForecastAutoCES
