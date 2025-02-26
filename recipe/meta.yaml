@@ -166,6 +166,8 @@ outputs:
     requirements:
       host:
         - python
+        - setuptools
+        - wheel
       run:
         - python
         - {{ pin_subpackage("u8darts-notorch", exact=True) }}
