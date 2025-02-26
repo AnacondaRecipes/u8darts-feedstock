@@ -166,17 +166,10 @@ outputs:
     requirements:
       host:
         - python
-        - setuptools
-        - wheel
       run:
         - python
-        - {{ pin_subpackage("u8darts", exact=True) }}
-        - pytorch-lightning >=1.5.0
-        - tensorboardx >=2.1
-        - pytorch >=1.8.0
-        - catboost >=1.0.6
-        - lightgbm >=3.2.0
-        - prophet >=1.1.1
+        - {{ pin_subpackage("u8darts-notorch", exact=True) }}
+        - {{ pin_subpackage("u8darts-torch", exact=True) }}
     test:
       imports:
         # dummy test; actual tests are in the `darts` subpackage
