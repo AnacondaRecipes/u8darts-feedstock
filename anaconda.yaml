@@ -1,0 +1,9 @@
+anaconda_config_version: 1
+upstream_sources:
+  - pypi:
+      identifier: u8darts
+    packages:
+      - u8darts
+      - u8darts-all
+      - u8darts-notorch
+      - u8darts-torch
